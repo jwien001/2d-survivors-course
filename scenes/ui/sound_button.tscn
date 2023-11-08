@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cowgm76ropwf7"]
+
+[ext_resource type="Script" path="res://scenes/ui/sound_button.gd" id="1_5lfxr"]
+[ext_resource type="AudioStream" uid="uid://crfhnhiv5me1m" path="res://assets/audio/click3.ogg" id="2_oppj8"]
+
+[node name="SoundButton" type="Button"]
+offset_right = 6.0
+offset_bottom = 6.0
+text = "sound button"
+script = ExtResource("1_5lfxr")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_oppj8")
+bus = &"Sound Effects"

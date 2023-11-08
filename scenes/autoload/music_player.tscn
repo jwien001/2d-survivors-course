@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlmqama5q6jn1"]
+
+[ext_resource type="AudioStream" uid="uid://cou32q0htib62" path="res://assets/audio/Hear+What+They+Say.mp3" id="1_88kuh"]
+[ext_resource type="Script" path="res://scenes/autoload/music_player.gd" id="2_gbska"]
+
+[node name="MusicPlayer" type="AudioStreamPlayer"]
+process_mode = 3
+stream = ExtResource("1_88kuh")
+volume_db = -20.0
+autoplay = true
+bus = &"Music"
+script = ExtResource("2_gbska")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 15.0
+one_shot = true

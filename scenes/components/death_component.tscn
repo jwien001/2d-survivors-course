@@ -1,0 +1,144 @@
+[gd_scene load_steps=16 format=3 uid="uid://bd7yl8rtxfv7t"]
+
+[ext_resource type="Texture2D" uid="uid://bpfa056fowxff" path="res://scenes/game_objects/basic_enemy/basic_enemy.png" id="1_7s7cd"]
+[ext_resource type="Script" path="res://scenes/components/death_component.gd" id="1_gm4ah"]
+[ext_resource type="Material" uid="uid://by1sjs4sfi5cy" path="res://scenes/components/hit_flash_component_material.tres" id="2_wisyc"]
+[ext_resource type="AudioStream" uid="uid://bnqv6bgfrctxs" path="res://assets/audio/footstep_carpet_000.ogg" id="4_ufe77"]
+[ext_resource type="AudioStream" uid="uid://c24ur4sj55xr2" path="res://assets/audio/footstep_carpet_001.ogg" id="5_l6mi8"]
+[ext_resource type="AudioStream" uid="uid://bfmp1mhd3ce1r" path="res://assets/audio/footstep_carpet_002.ogg" id="6_kg6sh"]
+[ext_resource type="AudioStream" uid="uid://bolmtuia3eexr" path="res://assets/audio/footstep_carpet_003.ogg" id="7_63xg1"]
+[ext_resource type="AudioStream" uid="uid://dutfafaah7ik0" path="res://assets/audio/footstep_carpet_004.ogg" id="8_1popb"]
+
+[sub_resource type="Animation" id="Animation_yu4w7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GPUParticles2D:material:shader_parameter/lerp_percent")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_hnalm"]
+resource_name = "default"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.7),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles2D:material:shader_parameter/lerp_percent")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(2.07053, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_stygg"]
+_data = {
+"RESET": SubResource("Animation_yu4w7"),
+"default": SubResource("Animation_hnalm")
+}
+
+[sub_resource type="Curve" id="Curve_16wrq"]
+_data = [Vector2(0.25, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.2), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_mc6ae"]
+curve = SubResource("Curve_16wrq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_swhly"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 30.0
+gravity = Vector3(0, 800, 0)
+initial_velocity_min = 175.0
+initial_velocity_max = 250.0
+angular_velocity_min = -1440.0
+angular_velocity_max = 1440.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_curve = SubResource("CurveTexture_mc6ae")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_kpyr8"]
+streams_count = 5
+playback_mode = 1
+random_volume_offset_db = 0.0
+stream_0/stream = ExtResource("4_ufe77")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("5_l6mi8")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("6_kg6sh")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("7_63xg1")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("8_1popb")
+stream_4/weight = 1.0
+
+[node name="DeathComponent" type="Node2D"]
+script = ExtResource("1_gm4ah")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_stygg")
+}
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = ExtResource("2_wisyc")
+emitting = false
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_swhly")
+texture = ExtResource("1_7s7cd")
+lifetime = 0.5
+one_shot = true
+fixed_fps = 0
+interpolate = false
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_kpyr8")
+max_distance = 300.0
+bus = &"Sound Effects"

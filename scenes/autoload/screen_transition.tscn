@@ -1,0 +1,69 @@
+[gd_scene load_steps=8 format=3 uid="uid://dxgfioud1iih0"]
+
+[ext_resource type="Script" path="res://scenes/autoload/screen_transition.gd" id="1_eqgiv"]
+[ext_resource type="Shader" path="res://scenes/autoload/screen_transition.gdshader" id="1_yxq86"]
+[ext_resource type="Texture2D" uid="uid://2esegl7f4p65" path="res://assets/ui/screen_transition.png" id="2_e7wgc"]
+
+[sub_resource type="Animation" id="Animation_xbnyo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/percent")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.545]
+}
+
+[sub_resource type="Animation" id="Animation_4gi74"]
+resource_name = "default"
+length = 0.4
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/percent")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(2.14355, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6enmy"]
+_data = {
+"RESET": SubResource("Animation_xbnyo"),
+"default": SubResource("Animation_4gi74")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jsyo4"]
+shader = ExtResource("1_yxq86")
+shader_parameter/transition_color = Color(0.247059, 0.14902, 0.192157, 1)
+shader_parameter/percent = 0.545
+shader_parameter/transition_texture = ExtResource("2_e7wgc")
+
+[node name="ScreenTransition" type="CanvasLayer"]
+process_mode = 3
+layer = 20
+script = ExtResource("1_eqgiv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+process_mode = 3
+libraries = {
+"": SubResource("AnimationLibrary_6enmy")
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_jsyo4")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
