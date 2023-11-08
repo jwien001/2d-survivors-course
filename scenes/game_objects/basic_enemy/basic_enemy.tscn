@@ -77,7 +77,7 @@ _data = {
 "walk": SubResource("Animation_p4528")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8lqpw"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b2pk6"]
 resource_local_to_scene = true
 shader = ExtResource("6_7ud0s")
 shader_parameter/lerp_percent = 0.0
@@ -98,7 +98,6 @@ stream_4/stream = ExtResource("15_ptxej")
 stream_4/weight = 1.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_puwok"]
-radius = 12.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kbv5i"]
 radius = 6.0
@@ -126,7 +125,7 @@ health_component = NodePath("../HealthComponent")
 [node name="HitFlashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("5_cskn0")]
 health_component = NodePath("../HealthComponent")
 sprite = NodePath("../Visuals/Sprite2D")
-hit_flash_material = SubResource("ShaderMaterial_8lqpw")
+hit_flash_material = SubResource("ShaderMaterial_b2pk6")
 
 [node name="DeathComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("4_l3c38")]
 health_component = NodePath("../HealthComponent")
@@ -151,5 +150,6 @@ texture = ExtResource("2_qsgat")
 offset = Vector2(0, -4)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_kbv5i")
