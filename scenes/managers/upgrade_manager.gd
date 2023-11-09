@@ -14,6 +14,7 @@ var upgrade_axe_damage = preload("res://resources/upgrades/axe_damage.tres")
 var upgrade_sword_rate = preload("res://resources/upgrades/sword_rate.tres")
 var upgrade_sword_damage = preload("res://resources/upgrades/sword_damage.tres")
 var upgrade_player_speed = preload("res://resources/upgrades/player_speed.tres")
+var upgrade_anvil = preload("res://resources/upgrades/anvil.tres")
 
 
 func _ready() -> void:
@@ -21,6 +22,7 @@ func _ready() -> void:
     upgrade_pool.add_item(upgrade_sword_rate, 10)
     upgrade_pool.add_item(upgrade_sword_damage, 10)
     upgrade_pool.add_item(upgrade_player_speed, 5)
+    upgrade_pool.add_item(upgrade_anvil, 10)
 
     experience_manager.level_up.connect(_on_level_up)
 
