@@ -12,7 +12,9 @@ func _ready() -> void:
     sprite.material = hit_flash_material
 
 
-func on_health_changed(_delta, current_health: float, max_health: float):
+func on_health_changed(delta, current_health: float, max_health: float):
+    if delta >= 0: return
+
     if hit_flash_tween && hit_flash_tween.is_valid():
         hit_flash_tween.kill()
 

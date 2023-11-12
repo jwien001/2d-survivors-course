@@ -1,6 +1,8 @@
 extends CharacterBody2D
 class_name Player
 
+@export var arena_time_manager: ArenaTimeManager
+
 @onready var velocity_component: VelocityComponent = $VelocityComponent
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var damage_interval_timer: Timer = $DamageIntervalTimer
@@ -16,6 +18,8 @@ var base_speed = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
     base_speed = $VelocityComponent.max_speed
+
+    arena_time_manager.arena_difficulty_increased.connect(_on_arena_difficulty_increased)
     $CollisionArea2D.body_entered.connect(_on_body_entered)
     $CollisionArea2D.body_exited.connect(_on_body_exited)
     damage_interval_timer.timeout.connect(_on_damager_interval_timer_timeout)
@@ -88,3 +92,10 @@ func _on_ability_upgrade_added(ability_upgrade: AbilityUpgrade, current_upgrades
         abilities.add_child((ability_upgrade as Ability).ability_controller_scene.instantiate())
     elif ability_upgrade.id == "player_speed":
         velocity_component.max_speed = base_speed * pow(1.1, current_upgrades["player_speed"]["quantity"])
+
+
+func _on_arena_difficulty_increased(difficulty: int):
+    var is_thirty_second_interval = (difficulty % 6) == 0
+    var health_regen_amt = MetaProgression.get_upgrade_count("health_regen")
+    if is_thirty_second_interval and health_regen_amt > 0:
+        health_component.damage(-1 * MetaProgression.get_upgrade_count("health_regen"))

@@ -11,7 +11,7 @@ signal health_changed(delta: float, current_health: float, max_health: float)
 
 
 func damage(damage_amt: float):
-    current_health = max(current_health - damage_amt, 0)
+    current_health = clamp(current_health - damage_amt, 0, max_health)
     health_changed.emit(-damage_amt, current_health, max_health)
     Callable(check_death).call_deferred()
 
