@@ -150,8 +150,10 @@ autowrap_mode = 3
 [node name="DescriptionLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 3
 theme_type_variation = &"BlueOutlineLabel"
 text = "some description here"
+vertical_alignment = 2
 autowrap_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
