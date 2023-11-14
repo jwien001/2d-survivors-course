@@ -13,6 +13,7 @@ extends Node
 var player: Node2D
 var entities_node: Node2D
 var enemy_table = WeightedTable.new()
+var num_to_spawn = 1
 
 
 # Called when the node enters the scene tree for the first time.
@@ -43,15 +44,20 @@ func get_spawn_position() -> Vector2:
     return player.global_position
 
 
+func spawn_enemy():
+    var enemy_scene = enemy_table.pick_item()
+    var enemy_instance = enemy_scene.instantiate() as Node2D
+    enemy_instance.global_position = get_spawn_position()
+    entities_node.add_child(enemy_instance)
+
+
 func _on_timer_timeout():
     timer.start()
 
     if !player: return
 
-    var enemy_scene = enemy_table.pick_item()
-    var enemy_instance = enemy_scene.instantiate() as Node2D
-    enemy_instance.global_position = get_spawn_position()
-    entities_node.add_child(enemy_instance)
+    for i in num_to_spawn:
+        spawn_enemy()
 
 
 func _on_arena_difficulty_increased(arena_difficulty: int):
@@ -62,3 +68,6 @@ func _on_arena_difficulty_increased(arena_difficulty: int):
         enemy_table.add_item(wizard_enemy_scene, 15)
     elif arena_difficulty == 12:
         enemy_table.add_item(bat_enemy_scene, 8)
+
+    if (arena_difficulty % 6) == 0:
+        num_to_spawn += 1
