@@ -1,8 +1,60 @@
-[gd_scene load_steps=8 format=3 uid="uid://b4gef8usytk0g"]
+[gd_scene load_steps=14 format=3 uid="uid://b4gef8usytk0g"]
 
 [ext_resource type="Texture2D" uid="uid://wavvojt6j2yg" path="res://scenes/abilities/anvil_ability/anvil.png" id="1_na13j"]
 [ext_resource type="Script" path="res://scenes/abilities/anvil_ability/anvil_ability.gd" id="1_sa1q2"]
 [ext_resource type="PackedScene" uid="uid://yk6fvnwjiwjo" path="res://scenes/components/hitbox_component.tscn" id="2_oe1jj"]
+[ext_resource type="Texture2D" uid="uid://baoksnaleqn6d" path="res://assets/particle.png" id="3_tet6d"]
+
+[sub_resource type="Animation" id="Animation_pbwyx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HitboxComponent/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visuals/Sprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GPUParticles2D:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_v07r5"]
 resource_name = "default"
@@ -58,44 +110,17 @@ tracks/3/keys = {
 "method": &"queue_free"
 }]
 }
-
-[sub_resource type="Animation" id="Animation_pbwyx"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Visuals:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("HitboxComponent/CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("GPUParticles2D:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.2),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Visuals/Sprite2D:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nb140"]
@@ -106,6 +131,35 @@ _data = {
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x2raq"]
 radius = 24.0
+
+[sub_resource type="Gradient" id="Gradient_nr55i"]
+offsets = PackedFloat32Array(0, 0.646409)
+colors = PackedColorArray(0.545098, 0.607843, 0.705882, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xb8gb"]
+gradient = SubResource("Gradient_nr55i")
+
+[sub_resource type="Curve" id="Curve_emxph"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.20197, 1), 0.0, 0.0, 0, 0, Vector2(0.598522, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_cu732"]
+curve = SubResource("Curve_emxph")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hng34"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 80.0
+initial_velocity_max = 125.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+angle_max = 360.0
+scale_min = 0.5
+scale_curve = SubResource("CurveTexture_cu732")
+color_initial_ramp = SubResource("GradientTexture1D_xb8gb")
 
 [node name="AnvilAbility" type="Node2D"]
 script = ExtResource("1_sa1q2")
@@ -122,6 +176,17 @@ libraries = {
 position = Vector2(0, -2)
 shape = SubResource("CircleShape2D_x2raq")
 disabled = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_hng34")
+texture = ExtResource("3_tet6d")
+lifetime = 0.3
+one_shot = true
+explosiveness = 0.9
+fixed_fps = 0
+interpolate = false
 
 [node name="Visuals" type="Node2D" parent="."]
 
