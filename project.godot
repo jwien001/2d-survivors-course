@@ -41,6 +41,7 @@ window/size/mode=3
 window/size/window_width_override=2560
 window/size/window_height_override=1440
 window/stretch/mode="canvas_items"
+window/stretch/scale_mode="integer"
 window/size/mode.debug=0
 
 [editor]
