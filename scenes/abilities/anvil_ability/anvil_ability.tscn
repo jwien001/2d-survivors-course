@@ -147,16 +147,14 @@ point_count = 4
 curve = SubResource("Curve_emxph")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hng34"]
+particle_flag_disable_z = true
 emission_shape = 1
 emission_sphere_radius = 1.0
-particle_flag_disable_z = true
+angle_max = 360.0
 spread = 180.0
-gravity = Vector3(0, 0, 0)
 initial_velocity_min = 80.0
 initial_velocity_max = 125.0
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
-angle_max = 360.0
+gravity = Vector3(0, 0, 0)
 scale_min = 0.5
 scale_curve = SubResource("CurveTexture_cu732")
 color_initial_ramp = SubResource("GradientTexture1D_xb8gb")
@@ -165,10 +163,10 @@ color_initial_ramp = SubResource("GradientTexture1D_xb8gb")
 script = ExtResource("1_sa1q2")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "default"
 libraries = {
 "": SubResource("AnimationLibrary_nb140")
 }
+autoplay = "default"
 
 [node name="HitboxComponent" parent="." instance=ExtResource("2_oe1jj")]
 

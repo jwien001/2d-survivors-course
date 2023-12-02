@@ -99,7 +99,6 @@ _data = {
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_03edn"]
 streams_count = 5
-random_volume_offset_db = 0.0
 stream_0/stream = ExtResource("2_qh87y")
 stream_0/weight = 1.0
 stream_1/stream = ExtResource("3_csh8q")
