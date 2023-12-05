@@ -35,8 +35,7 @@ func get_health_component():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
     var movement_vector = get_movement_vector()
-    var direction = movement_vector.normalized()
-    velocity_component.accelerate_in_direction(direction)
+    velocity_component.accelerate_in_direction(movement_vector)
     velocity_component.move(self)
 
     if movement_vector.x != 0 || movement_vector.y != 0:
